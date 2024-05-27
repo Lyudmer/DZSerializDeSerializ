@@ -14,7 +14,7 @@ namespace DZSerializDeSerializ
     {
         private F _testObj = new F { i1 = 1, i2 = 2, i3 = 3, i4 = 4, i5 = 5 };
        
-        [Benchmark]
+      //  [Benchmark]
         public void ObjectToStr()
         {   var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -22,19 +22,25 @@ namespace DZSerializDeSerializ
             string resstr="";
             for (int i=0;i<1000;i++) resstr += testStr.RunSerializeStr();
            
-         //   Console.WriteLine($"Result string: {resstr}");
+          //  Console.WriteLine($"Result string: {resstr}");
             stopwatch.Stop();
             Console.WriteLine($"str ser: {stopwatch.ElapsedMilliseconds}");
 
             //var testobj = new StrToObject(new DeSerializeStr(), resstr);
 
         }
-       // [Benchmark]
+        [Benchmark]
         public void ObjectToJson()
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
             var testJson = new ObjectToJson(new SerializeJson(), _testObj);
-            string resjs = testJson.RunSerializeJson();
-          
+            string resjs="";
+            
+            for (int i = 0; i < 1000; i++) resjs += testJson.RunSerializeJson();
+            Console.WriteLine($"Result string: {resjs}");
+            stopwatch.Stop();
+            Console.WriteLine($"json ser: {stopwatch.ElapsedMilliseconds}");
             //var after = JsonSerializer.Deserialize<TestFile>(File.ReadAllText("json.json"));
         }
     }
